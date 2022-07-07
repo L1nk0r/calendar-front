@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import getMonthInCalendarFormat from '../scripts/full_month'
+
 export default{
    name: 'mainPage',
    components: { },
@@ -30,15 +32,7 @@ export default{
    methods: {},
    computed: {},
    created() {
-      for (let i = 0; i < 5; i++) {
-         let week = [];
-         for (let j = 0; j < 7; j++){
-            let day = i * 7 + j + 1;
-            week.push(day);
-         }
-         this.days.push(week);
-      }
-      console.log(this.days);
+      this.days = getMonthInCalendarFormat(0, 2022);
    },
    mounted() {}
 }
@@ -62,7 +56,7 @@ export default{
    height: 80%;
    width: 80%;
 
-   border: 1px solid black;
+   /* border: 1px solid black; */
 }
 
 .week{
@@ -70,7 +64,7 @@ export default{
 
    display: grid;
    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-   height: 20%;
+   height: 15%;
 }
 
 .day {
