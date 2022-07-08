@@ -5,19 +5,21 @@
          <h1 class="full_date">{{ current_date }}</h1>
 
          <div class="weekdays">
-            <p>Mon.</p>
-            <p>Tue.</p>
-            <p>Wen.</p>
-            <p>Thu.</p>
-            <p>Fri.</p>
-            <p>Sat.</p>
-            <p>Sun.</p>
+            <p></p>
+            <p>Mo.</p>
+            <p>Tu.</p>
+            <p>We.</p>
+            <p>Th.</p>
+            <p>Fr.</p>
+            <p>Sa.</p>
+            <p>Su.</p>
          </div>
          
          <div 
             class="week"
             v-for="week in days"
             :key="week">
+            <p>Week</p>
             <day-cart 
                v-for="day in week"
                :key="day"
@@ -67,6 +69,13 @@ export default{
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');
+
+:root {
+   --main-background: #0D1226;
+   --active-days-background: #2B3C81;
+   --not-active-days-background: #1A244C;
+}
 
 .container {
    height: 100vh;
@@ -77,6 +86,8 @@ export default{
    display: flex;
    justify-content: center;
    align-items: center;
+
+   overflow: hidden;
 }
 
 .carts_wrapper {
@@ -91,18 +102,39 @@ export default{
    width: 100%;
 
    display: grid;
-   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
    height: 15%;
+
+   transition: 1s;
 }
+
+.week p {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100%;
+
+   color: white;
+   font-size: 17px;
+}
+
+/* .week:hover {
+   height: 82vh;
+} */
 
 .weekdays {
    width: 100%;
 
    display: grid;
-   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 
-   justify-items: center;
+   justify-items: flex-end;
+   padding-right: 10px;
    margin-top: 20px;
+   margin-bottom: 5px;
+
+   color: white;
+   font-size: 17px;
 }
 
 .day {
@@ -122,7 +154,10 @@ export default{
 }
 
 .full_date {
-   font-weight: 700;
+   font-weight: 400;
+   font-size: 25px;
+
+   color: rgba(255, 255, 255, 0.7);
 }
 
 .active_month_day {

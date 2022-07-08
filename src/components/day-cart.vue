@@ -55,26 +55,41 @@ export default{
    padding: 5px;
    margin: 5px;
    border-radius: 3px;
+
+   font-size: 23px;
+   font-family: 'Bungee', cursive;
+}
+
+.cart:hover {
+   transform: scale(1.1);
 }
 
 .active_month {
    border: 1px solid black;
    transition: 0.4s;
+
+   background-color: var(--active-days-background);
+
+   cursor: pointer;
+   color: rgba(255, 255, 255, 0.7);
 }
 
 .active_month:hover {
-   background-color: rgba(0, 0, 0, 0.2);
+   background-color: rgb(73, 92, 171);
+   color: rgba(255, 255, 255, 0.9)
 }
 
 .red {
    border: 2px solid red;
 }
 
-.red:hover {
+/* .red:hover {
    background-color: rgba(0, 0, 255, 0.4);
-}
+} */
 
-.another_month {border: 1px solid rgba(0, 0, 0, 0.2);
-   background-color: rgba(0, 0, 0, 0.1);
+.another_month {
+   border: 1px solid rgba(0, 0, 0, 0.2);
+   background-color: var(--not-active-days-background);
+   color: rgba(255, 255, 255, 0.3);
 }
 </style>
