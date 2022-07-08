@@ -80,7 +80,8 @@ export default{
 }
 
 .carts_wrapper {
-   height: 80%;
+   margin-top: 50px;
+   height: 90%;
    width: 80%;
 
    /* border: 1px solid black; */

@@ -1,7 +1,7 @@
 <template>
    <div 
       class="cart red active_month"
-      v-if="dayData.date.day === this.today.getDate()">
+      v-if="isToday()">
       {{ dayData.date.day }}
    </div>  
 
@@ -33,14 +33,17 @@ export default{
       }
    },
    components: { },
-   methods: { },
-   computed: { },
-   mounted() {
-      
-      /* if ((this.today.getDate() === this.dayData.date.day) && (this.today.getDate() === this.dayData.date.day) && (this.today.getDate() === this.dayData.date.day)) {
-         
-      } */
+   methods: {
+      isToday(){
+         if ((this.today.getDate() === this.dayData.date.day) && (this.today.getDate() === this.dayData.date.day) && (this.today.getDate() === this.dayData.date.day)) {
+            return true
+         } else {
+            return false
+         }
+      }
    },
+   computed: { },
+   mounted() { },
    created() {
       this.today = new Date();
    } 
@@ -65,6 +68,10 @@ export default{
 
 .red {
    border: 2px solid red;
+}
+
+.red:hover {
+   background-color: rgba(0, 0, 255, 0.4);
 }
 
 .another_month {border: 1px solid rgba(0, 0, 0, 0.2);
