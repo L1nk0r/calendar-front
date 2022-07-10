@@ -1,8 +1,6 @@
 export default class Category{
-   constructor(date, month, year){
+   constructor(date){
       this.date = date;
-      this.month = month;
-      this.year = year;
       
       /* this.weekday = args.weekday; */
    }

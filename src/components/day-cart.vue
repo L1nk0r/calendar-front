@@ -58,6 +58,8 @@ export default{
 
    font-size: 23px;
    font-family: 'Bungee', cursive;
+
+   transition: 0.4s;
 }
 
 .cart:hover {

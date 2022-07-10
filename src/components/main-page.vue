@@ -1,6 +1,8 @@
 <template>
    <div class="container">
-
+      <div class="swipe left">
+         left
+      </div>
       <div class="carts_wrapper">
          <h1 class="full_date">{{ current_date }}</h1>
 
@@ -19,7 +21,7 @@
             class="week"
             v-for="week in days"
             :key="week">
-            <p>Week</p>
+            <p>Week {{ week.id }}</p>
             <day-cart 
                v-for="day in week"
                :key="day"
@@ -27,6 +29,9 @@
          </div>
       </div>
       
+      <div class="swipe right">
+         right
+      </div>
    </div>
 </template>
 
@@ -88,6 +93,21 @@ export default{
    align-items: center;
 
    overflow: hidden;
+}
+
+.swipe {
+   height: 100%;
+   justify-content: center;
+   align-items: center;
+   display: flex;
+
+   width: 10%;
+
+   transition: 0.4s;
+}
+
+.swipe:hover {
+   background-color: rgba(255, 255, 255, 0.4);
 }
 
 .carts_wrapper {
