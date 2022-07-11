@@ -2,19 +2,20 @@
    <div 
       class="cart red active_month"
       v-if="isToday()">
-      {{ dayData.date.day }}
+      <div class="header">{{ dayData.date.day }}</div>
    </div>  
 
    <div 
       class="cart active_month"
       v-else-if="dayData.date.month === this.today.getMonth()">
-      {{ dayData.date.day }}
+      <div class="header">{{ dayData.date.day }}</div>
    </div>   
 
    <div 
       class="cart another_month"
       v-else>
-      {{ dayData.date.day }}
+      <div class="header">{{ dayData.date.day }}</div>
+      <!-- <div class="meeting"></div> -->
    </div>   
 </template>
 
@@ -35,7 +36,7 @@ export default{
    components: { },
    methods: {
       isToday(){
-         if ((this.today.getDate() === this.dayData.date.day) && (this.today.getDate() === this.dayData.date.day) && (this.today.getDate() === this.dayData.date.day)) {
+         if ((this.today.getDate() === this.dayData.date.day) && (this.today.getMonth() === this.dayData.date.month) && (this.today.getFullYear() === this.dayData.date.year)) {
             return true
          } else {
             return false
@@ -66,6 +67,10 @@ export default{
    transform: scale(1.1);
 }
 
+.cart .header{
+   text-align: right;
+}
+
 .active_month {
    border: 1px solid black;
    transition: 0.4s;
@@ -93,5 +98,12 @@ export default{
    border: 1px solid rgba(0, 0, 0, 0.2);
    background-color: var(--not-active-days-background);
    color: rgba(255, 255, 255, 0.3);
+}
+
+.meeting {
+   width: 100%;
+   height: 8px;
+   border-radius: 2px;
+   background-color: blueviolet;
 }
 </style>

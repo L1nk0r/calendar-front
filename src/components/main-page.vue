@@ -1,6 +1,8 @@
 <template>
    <div class="container">
-      <div class="swipe left">
+      <div 
+         class="swipe left"
+         @click="left()">
          left
       </div>
       <div class="carts_wrapper">
@@ -29,7 +31,9 @@
          </div>
       </div>
       
-      <div class="swipe right">
+      <div 
+         class="swipe right"
+         @click="right()">
          right
       </div>
    </div>
@@ -47,10 +51,23 @@ export default{
    data(){
       return {
          days: [],
-         current_date: null
+         current_date: null,
+         current_month_global: null,
+         current_year_global: null,
+         swipe_index: 0
       }
    },
-   methods: {},
+   methods: {
+      left(){
+         this.swipe_index--;
+         this.days = getMonthInCalendarFormat(this.current_month_global + this.swipe_index, this.current_year_global);
+      },
+      right(){
+
+         this.swipe_index++;
+         this.days = getMonthInCalendarFormat(this.current_month_global + this.swipe_index, this.current_year_global);
+      }
+   },
    computed: {},
    created() {
       const monthNames = ["January", "February", "March", "April", "May", "June",
@@ -60,10 +77,12 @@ export default{
       let date = new Date();
 
       let current_day = date.getDate();
+      this.current_month_global = date.getMonth();
       let current_month = monthNames[date.getMonth()];
+      this.current_year_global = date.getFullYear();
       let current_year = date.getFullYear();
 
-      this.current_date = `${current_day} ${current_month} ${current_year}`
+      this.current_date = `The ${current_day} of ${current_month} ${current_year}`
 
 
       this.days = getMonthInCalendarFormat(date.getMonth(), current_year);
@@ -138,8 +157,8 @@ export default{
    font-size: 17px;
 }
 
-/* .week:hover {
-   height: 82vh;
+/* .week p:hover{
+   
 } */
 
 .weekdays {
