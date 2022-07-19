@@ -3,11 +3,13 @@
       <div 
          class="swipe left"
          @click="left()">
-         left
+         {{ monthNames[getPreviousMonthNumber()] }}
       </div>
       <div class="carts_wrapper">
-         <h1 class="full_date">{{ current_date }}</h1>
-
+         <h1 
+         class="full_date"
+         @click="backToTodaysMonth()">{{ current_date }}</h1>
+         <button v-if="showenWeek != -1" @click="showenWeek = -1">Reset</button>
          <div class="weekdays">
             <p></p>
             <p>Mo.</p>
@@ -20,21 +22,39 @@
          </div>
          
          <div 
-            class="week"
-            v-for="week in days"
+            class="days_container"
+            v-for="(week, id) in days"
             :key="week">
-            <p>Week {{ week.id }}</p>
-            <day-cart 
-               v-for="day in week"
-               :key="day"
-               :dayData="day"/>
+
+            <div 
+            class="temp_container"
+            v-if="showenWeek == -1 || showenWeek == id">
+
+               <div 
+               class="week">
+
+                  <p
+                  @click="openWeek(id)">Week {{ id + 1 }}</p>
+                  <day-cart 
+                     v-for="day in week"
+                     :key="day"
+                     :dayData="day"
+                     :currentMonth="current_month_global"
+                     :currentYear="current_year_global"
+                     :showenWeek="showenWeek"
+                     :weekId="id"
+                     class="day-cart"/>
+
+               </div>
+            </div>
+            
          </div>
       </div>
       
       <div 
          class="swipe right"
          @click="right()">
-         right
+         {{ monthNames[getNextMonthNumber()] }}
       </div>
    </div>
 </template>
@@ -54,31 +74,68 @@ export default{
          current_date: null,
          current_month_global: null,
          current_year_global: null,
-         swipe_index: 0
+         swipe_index: 0,
+         monthNames: ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+         ],
+         showenWeek: -1,
       }
    },
    methods: {
       left(){
-         this.swipe_index--;
-         this.days = getMonthInCalendarFormat(this.current_month_global + this.swipe_index, this.current_year_global);
+         this.swipe_index = -1;
+         this.current_month_global += this.swipe_index;
+         if (this.current_month_global < 0){
+            this.current_year_global -= 1;
+            this.current_month_global = this.getPreviousMonthNumber();
+         }
+         this.current_date = `${this.monthNames[this.current_month_global]} ${this.current_year_global}`;
+         this.days = getMonthInCalendarFormat(this.current_month_global, this.current_year_global);
       },
       right(){
 
-         this.swipe_index++;
-         this.days = getMonthInCalendarFormat(this.current_month_global + this.swipe_index, this.current_year_global);
+         this.swipe_index = 1;
+         this.current_month_global += this.swipe_index;
+         if (this.current_month_global > 11){
+            this.current_year_global += 1;
+            this.current_month_global = this.getNextMonthNumber();
+         }
+         this.current_date = `${this.monthNames[this.current_month_global]} ${this.current_year_global}`;
+         this.days = getMonthInCalendarFormat(this.current_month_global, this.current_year_global);
+      },
+      backToTodaysMonth(){
+         let date = new Date();
+         this.swipe_index = 0;
+         this.current_month_global = date.getMonth();
+         this.current_year_global = date.getFullYear();
+         this.days = getMonthInCalendarFormat(this.current_month_global, this.current_year_global);
+      },
+      getPreviousMonthNumber(){
+         if (this.current_month_global - 1 < 0){
+            return 11
+         } else {
+            return this.current_month_global - 1
+         }
+      },
+      getNextMonthNumber(){
+         if (this.current_month_global + 1 > 11){
+            return 0
+         } else {
+            return this.current_month_global + 1
+         }
+      },
+      openWeek(id){
+         this.showenWeek = id;
       }
    },
    computed: {},
    created() {
-      const monthNames = ["January", "February", "March", "April", "May", "June",
-         "July", "August", "September", "October", "November", "December"
-      ];
 
       let date = new Date();
 
       let current_day = date.getDate();
       this.current_month_global = date.getMonth();
-      let current_month = monthNames[date.getMonth()];
+      let current_month = this.monthNames[date.getMonth()];
       this.current_year_global = date.getFullYear();
       let current_year = date.getFullYear();
 
@@ -123,6 +180,8 @@ export default{
    width: 10%;
 
    transition: 0.4s;
+
+   color: white;
 }
 
 .swipe:hover {
@@ -142,9 +201,19 @@ export default{
 
    display: grid;
    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-   height: 15%;
 
    transition: 1s;
+   height: 100%;
+}
+
+.days_container {
+   width: 100%;
+   height: 15%;
+   /* height: 100%; */
+}
+
+.temp_container {
+   height: 100%;
 }
 
 .week p {
@@ -156,10 +225,6 @@ export default{
    color: white;
    font-size: 17px;
 }
-
-/* .week p:hover{
-   
-} */
 
 .weekdays {
    width: 100%;
@@ -197,9 +262,33 @@ export default{
    font-size: 25px;
 
    color: rgba(255, 255, 255, 0.7);
+
+   cursor: pointer;
 }
 
 .active_month_day {
    border-radius: 2px solid rgba(0, 0, 0, 1);
+}
+
+.week p:hover{
+   cursor: pointer;
+}
+
+.day-cart {
+   transition: 0.4s;
+}
+
+.week p:hover ~ .day-cart {
+   /* height: 80vh; */
+   color: blue;
+}
+
+.showenWeek::before {
+   height: 100%;
+   transition: 0.4s;
+}
+
+.showenWeek {
+   height: 70vh !important;
 }
 </style>

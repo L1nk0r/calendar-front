@@ -7,7 +7,7 @@
 
    <div 
       class="cart active_month"
-      v-else-if="dayData.date.month === this.today.getMonth()">
+      v-else-if="dayData.date.month === currentMonth && dayData.date.year === currentYear">
       <div class="header">{{ dayData.date.day }}</div>
    </div>   
 
@@ -16,7 +16,7 @@
       v-else>
       <div class="header">{{ dayData.date.day }}</div>
       <!-- <div class="meeting"></div> -->
-   </div>   
+   </div>  
 </template>
 
 <script>
@@ -31,7 +31,11 @@ export default{
       dayData: {
          type: Object,
          default: () => {}
-      }
+      },
+      currentMonth: Number,
+      currentYear: Number,
+      weekId: Number,
+      showenWeek: Number,
    },
    components: { },
    methods: {
@@ -89,6 +93,10 @@ export default{
 .red {
    border: 2px solid red;
 }
+
+/* .unshowenWeek {
+   display: none;
+} */
 
 /* .red:hover {
    background-color: rgba(0, 0, 255, 0.4);
