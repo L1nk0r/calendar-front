@@ -61,6 +61,8 @@ export default{
    margin: 5px;
    border-radius: 3px;
 
+   height: 12vh;
+
    font-size: 23px;
    font-family: 'Bungee', cursive;
 

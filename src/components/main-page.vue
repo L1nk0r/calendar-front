@@ -208,8 +208,6 @@ export default{
 
 .days_container {
    width: 100%;
-   height: 15%;
-   /* height: 100%; */
 }
 
 .temp_container {
